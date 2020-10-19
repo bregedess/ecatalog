@@ -16,3 +16,5 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->get('booklets/{booklet_id}/catalogues', 'BookletCatalogController@index');
