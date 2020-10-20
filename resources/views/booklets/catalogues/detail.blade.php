@@ -88,16 +88,16 @@
 @section('content')
     <div class="container">
         <div class="header">
-            <div class="header-font">{{$data->booklet->title}}</div>
+            <div class="header-font">{{$booklet->title}}</div>
         </div>
         <div class="banner">
 
         </div>
         <div class="info-name">
-            <p>{{$data->member->member_name}}</p>
-            <p>{{$data->member->mobile_phone}}</p>
+            <p>{{$member->member_name}}</p>
+            <p>{{$member->mobile_phone}}</p>
         </div>
-        <p>{{$data->total_count}} Produk</p>
+{{--        <p>{{$data->total_count}} Produk</p>--}}
 
         <div class="row justify-content-center">
             <div>
@@ -118,6 +118,7 @@
                         </div>
                     @endforeach
                 </div>
+
             </div>
         </div>
     </div>

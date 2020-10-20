@@ -14,7 +14,7 @@ class SearchQueryBuilder
     protected $value;
     protected $conditionType;
 
-    public function __construct($field, $value, $conditionType, $currentPage = 1, $pageSize = 4)
+    public function __construct($field, $value, $conditionType, $currentPage, $pageSize)
     {
         $this->currentPage      = $currentPage;
         $this->pageSize         = $pageSize;

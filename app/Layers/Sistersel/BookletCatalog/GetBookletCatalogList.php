@@ -13,11 +13,16 @@ class GetBookletCatalogList extends Sistersel
 
     protected $uri = '/rest/V1/sistersel-ecatalog/product/search';
 
-    public function __construct($booklet_id)
+    protected $page;
+    protected $limit;
+
+    public function __construct($booklet_id, $page = 1, $limit = 4)
     {
         parent::__construct();
-        $this->queryParams = (new Sistersel\Helpers\SearchQueryBuilder('booklet_id', $booklet_id, 'in'))
+        $this->queryParams = (new Sistersel\Helpers\SearchQueryBuilder('booklet_id', $booklet_id, 'in', $page, $limit))
             ->build();
+        $this->page  = $page;
+        $this->limit = $limit;
     }
 
     public function handle()
@@ -29,6 +34,14 @@ class GetBookletCatalogList extends Sistersel
             ]);
 
             $data = json_decode($response->getBody()->getContents());
+
+            $lastPage = max((int) ceil($data->total_count / $this->limit), 1);
+
+            if ($this->page < $lastPage) {
+                $data->is_have_next_page = true;
+            } else {
+                $data->is_have_next_page = false;
+            }
         } catch (\Exception $e) {
             Log::error($e->getMessage());
         }

@@ -18,3 +18,4 @@ $router->get('/', function () use ($router) {
 });
 
 $router->get('booklets/{booklet_id}/catalogues', 'BookletCatalogController@index');
+$router->get('booklets/{booklet_id}/my-catalogues', 'BookletCatalogController@getView');
