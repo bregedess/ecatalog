@@ -1,31 +1,27 @@
 <?php
 
 
-namespace App\Layers\Sistersel;
+namespace App\Layers\Sistersel\Booklet;
 
 
 use App\Layers\Sistersel;
 use Illuminate\Support\Facades\Log;
 
-class GetBookletCatalogList extends Sistersel
+class GetBookletDetail extends Sistersel
 {
-    protected $queryParams;
-
-    const URI = '/rest/V1/sistersel-ecatalog/product/search';
+    protected $uri = '/rest/V1/sistersel-ecatalog/booklet/:bookletId';
 
     public function __construct($booklet_id)
     {
         parent::__construct();
-        $this->queryParams = (new Sistersel\Helpers\SearchQueryBuilder('booklet_id', $booklet_id, 'in'))
-            ->build();
+        $this->uri = strtr($this->uri, [':bookletId' => $booklet_id]);
     }
 
     public function handle()
     {
         try {
-            $response = $this->client->get(self::URI, [
+            $response = $this->client->get($this->uri, [
                 'headers'   => $this->headers,
-                'query'     => $this->queryParams,
             ]);
 
             $data = json_decode($response->getBody()->getContents());

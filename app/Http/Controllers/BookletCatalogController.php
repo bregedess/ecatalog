@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 
-use App\Layers\Sistersel\GetBookletCatalogList;
+use App\Layers\Sistersel\Booklet\GetBookletDetail;
+use App\Layers\Sistersel\BookletCatalog\GetBookletCatalogList;
+use App\Layers\Sistersel\Member\GetMemberDetail;
 
 class BookletCatalogController extends Controller
 {
@@ -21,7 +23,15 @@ class BookletCatalogController extends Controller
     {
         $bookletLayer = new GetBookletCatalogList($booklet_id);
         $data = $bookletLayer->handle();
-        //TODO get booklet name and put on data
+
+        $bookletDetail = new GetBookletDetail($booklet_id);
+        $booklet = $bookletDetail->handle();
+        $data->booklet = $booklet;
+
+        $memberDetail = new GetMemberDetail($booklet->member_id);
+        $member = $memberDetail->handle();
+        $data->member = $member;
+
         return view('booklets.catalogues.detail', ['data' => $data]);
     }
 }
